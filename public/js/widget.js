@@ -5,21 +5,27 @@ document.getElementById('ticketForm').addEventListener('submit', function (e) {
 
     var form = e.target;
     var btn = document.getElementById('submitBtn');
-    var data = {
-        name: form.name.value,
-        phone: form.phone.value,
-        email: form.email.value,
-        subject: form.subject.value,
-        body: form.body.value,
-    };
+    var data = new FormData();
+    data.append('name', form.name.value);
+    data.append('phone', form.phone.value);
+    data.append('email', form.email.value);
+    data.append('subject', form.subject.value);
+    data.append('body', form.body.value);
+
+    var fileInput = form.querySelector('input[type="file"]');
+    if (fileInput && fileInput.files.length > 0) {
+        for (var i = 0; i < fileInput.files.length; i++) {
+            data.append('files[]', fileInput.files[i]);
+        }
+    }
 
     btn.disabled = true;
     btn.textContent = 'Надсилання...';
 
     fetch('/api/tickets', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data),
+        headers: { 'Accept': 'application/json' },
+        body: data,
     })
     .then(function (response) {
         return response.json().then(function (json) {

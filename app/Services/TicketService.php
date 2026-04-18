@@ -31,6 +31,10 @@ class TicketService
             'status' => 'new',
         ]);
 
+        if (!empty($data['files'])) {
+            $this->ticketRepository->attachFiles($ticket, $data['files']);
+        }
+
         $ticket->load('customer');
 
         return $ticket;

@@ -45,6 +45,11 @@ input, textarea {
     outline: none;
 }
 
+input[type="file"] {
+    padding: 5px;
+    cursor: pointer;
+}
+
 input:focus, textarea:focus {
     border-color: #4a90e2;
 }

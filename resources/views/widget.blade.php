@@ -37,6 +37,12 @@
                 <div class="field-error" id="error-body"></div>
             </div>
 
+            <div class="form-group">
+                <label>Файли (необов'язково)</label>
+                <input type="file" name="files[]" multiple accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt">
+                <div class="field-error" id="error-files"></div>
+            </div>
+
             <button type="submit" id="submitBtn">Надіслати</button>
         </form>
 

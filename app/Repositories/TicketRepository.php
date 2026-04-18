@@ -47,6 +47,13 @@ class TicketRepository
         $ticket->save();
     }
 
+    public function attachFiles(Ticket $ticket, array $files): void
+    {
+        foreach ($files as $file) {
+            $ticket->addMedia($file)->toMediaCollection('attachments');
+        }
+    }
+
     public function create(array $data): Ticket
     {
         return Ticket::create($data);
