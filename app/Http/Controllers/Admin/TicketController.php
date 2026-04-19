@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpdateTicketStatusRequest;
 use App\Repositories\TicketRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,15 +28,11 @@ class TicketController extends Controller
         return view('admin.tickets.show', compact('ticket'));
     }
 
-    public function updateStatus(Request $request, int $id): RedirectResponse
+    public function updateStatus(UpdateTicketStatusRequest $request, int $id): RedirectResponse
     {
-        $request->validate([
-            'status' => ['required', 'in:new,in_progress,processed'],
-        ]);
-
         $ticket = $this->ticketRepository->findById($id);
         $this->ticketRepository->updateStatus($ticket, $request->status);
 
-        return back()->with('success', 'Статус оновлено.');
+        return redirect()->back()->with('success', 'Статус оновлено.');
     }
 }

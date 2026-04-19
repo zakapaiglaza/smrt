@@ -68,16 +68,21 @@ class TicketRepository
 
     public function countByDay(Carbon $date): int
     {
-        return Ticket::forDay($date)->count();
+        return Ticket::whereDate('created_at', $date)->count();
     }
 
     public function countByWeek(Carbon $date): int
     {
-        return Ticket::forWeek($date)->count();
+        return Ticket::whereBetween('created_at', [
+            $date->copy()->startOfWeek(),
+            $date->copy()->endOfWeek(),
+        ])->count();
     }
 
     public function countByMonth(Carbon $date): int
     {
-        return Ticket::forMonth($date)->count();
+        return Ticket::whereMonth('created_at', $date->month)
+            ->whereYear('created_at', $date->year)
+            ->count();
     }
 }

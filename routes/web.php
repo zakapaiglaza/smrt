@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\TicketController as AdminTicketController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\WidgetController;
 use Illuminate\Support\Facades\Route;
 

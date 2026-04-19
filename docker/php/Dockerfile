@@ -17,14 +17,18 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
+COPY docker/php/php.ini /usr/local/etc/php/conf.d/custom.ini
+
 WORKDIR /var/www
 
 COPY . .
 
 RUN composer install --no-interaction --optimize-autoloader
 
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+COPY docker/app/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 9000
 
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["php-fpm"]

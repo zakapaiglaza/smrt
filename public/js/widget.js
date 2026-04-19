@@ -35,6 +35,7 @@ document.getElementById('ticketForm').addEventListener('submit', function (e) {
     .then(function (result) {
         if (result.status === 201) {
             form.style.display = 'none';
+            document.querySelector('.widget h2').style.display = 'none';
             show('successMsg');
         } else if (result.status === 422) {
             showFieldErrors(result.body.errors);
